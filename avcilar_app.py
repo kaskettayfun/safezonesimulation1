@@ -13,14 +13,11 @@ st.title("🚨 Avcılar Dinamik Afet Karar Destek Sistemi (OSMnx)")
 st.markdown("Bu sistem, Avcılar'ın **gerçek cadde ve sokak ağını** anlık çekerek, deprem anında enkaz riskine göre Google Maps benzeri navigasyon sağlar.")
 
 # 1. GERÇEK SOKAK AĞINI İNDİRME
-# Sadece ilk açılışta çalışır, haritayı bilgisayarın hafızasına kaydeder.
-@st.cache_resource(show_spinner="Avcılar gerçek sokak ağı indiriliyor... (Bu işlem sadece 1 kere yapılır, yaklaşık 1 dakika sürebilir)")
-def avcilar_sokak_agini_indir():
-    @st.cache_resource(show_spinner="Sokak ağı dosyadan yükleniyor...")
+@st.cache_resource(show_spinner="Sokak ağı dosyadan yükleniyor...")
 def avcilar_sokak_agini_indir():
     # 1. Dosyayı ham haliyle oku
     G = ox.load_graphml("avcilar_sokak_agi.graphml")
-    # 2. Algoritmanın çalışması için yönlü grafiğe dönüştür (Yeni sürüm koduyla)
+    # 2. Algoritmanın çalışması için yönlü grafiğe dönüştür
     G = ox.convert.to_digraph(G, weight='length')
     return G
 
