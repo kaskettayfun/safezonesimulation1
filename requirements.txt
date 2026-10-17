@@ -6,3 +6,5 @@ osmnx
 folium
 streamlit-folium
 openpyxl
+scikit-learn
+scipy
