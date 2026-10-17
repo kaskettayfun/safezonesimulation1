@@ -16,11 +16,12 @@ st.markdown("Bu sistem, Avcılar'ın **gerçek cadde ve sokak ağını** anlık 
 # Sadece ilk açılışta çalışır, haritayı bilgisayarın hafızasına kaydeder.
 @st.cache_resource(show_spinner="Avcılar gerçek sokak ağı indiriliyor... (Bu işlem sadece 1 kere yapılır, yaklaşık 1 dakika sürebilir)")
 def avcilar_sokak_agini_indir():
-    ox.settings.use_cache = True
-    # Avcılar'ın sadece araba/lojistik girebilen yol ağını çekiyoruz
-    G = ox.graph_from_place("Avcılar, Istanbul, Turkey", network_type="drive")
-    # Yönlü grafiğe çeviriyoruz (Dijkstra rotalaması için gerekli)
-    G = ox.utils_graph.get_digraph(G, weight='length')
+    @st.cache_resource(show_spinner="Sokak ağı dosyadan yükleniyor...")
+def avcilar_sokak_agini_indir():
+    # 1. Dosyayı ham haliyle oku
+    G = ox.load_graphml("avcilar_sokak_agi.graphml")
+    # 2. Algoritmanın çalışması için yönlü grafiğe dönüştür (Yeni sürüm koduyla)
+    G = ox.convert.to_digraph(G, weight='length')
     return G
 
 # 2. SOKAKLARA RİSK (ENKAZ) ATAMA SİMÜLASYONU
